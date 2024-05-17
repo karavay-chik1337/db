@@ -402,8 +402,8 @@ create table trip (
    house_id             INT4                 not null,
    car_id               INT4                 not null,
    drivers_id           INT4                 not null,
-   trip_timeStart       DATE                 not null,
-   trip_timeEnd         TIME                 null,
+   trip_timeStart       TIMESTAMP            not null,
+   trip_timeEnd         TIMESTAMP            null,
    trip_price           MONEY                null,
    constraint PK_TRIP primary key (trip_id)
 );
