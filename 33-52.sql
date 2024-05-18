@@ -24,13 +24,13 @@
 -- limit 1
 
 --39
-select car.*, drivers.*
-from car left join "car-drivers" on car.car_id = "car-drivers".car_id
-left join (select car.car_id as id, "car-drivers".drivers_id as idd
-           from "car-drivers", car where car.car_id = "car-drivers".car_id)
-    t on t.id = car.car_id left join drivers on drivers.drivers_id = t.idd
-order by car.car_yearofproduction
-limit 3;
+-- select car.*, drivers.*
+-- from car left join "car-drivers" on car.car_id = "car-drivers".car_id
+-- left join (select car.car_id as id, "car-drivers".drivers_id as idd
+--            from "car-drivers", car where car.car_id = "car-drivers".car_id)
+--     t on t.id = car.car_id left join drivers on drivers.drivers_id = t.idd
+-- order by car.car_yearofproduction
+-- limit 3;
 
 --40
 -- select mark.mark_name, model.model_name
@@ -42,18 +42,46 @@ limit 3;
 --   and model.mark_id = mark.mark_id;
 
 --41
-select client.client_name, client.client_patronymic, t.countCar
-from client left join (
-    select trip.client_id as clientId, count(distinct trip.car_id) as countCar
-    from trip left join car on trip.car_id = car.car_id
-    group by trip.client_id
-    order by 1
-) t on client.client_id = t.clientId
-where countCar = (select count(*) from car);
+-- select client.client_name, client.client_patronymic, t.countCar
+-- from client left join (
+--     select trip.client_id as clientId, count(distinct trip.car_id) as countCar
+--     from trip left join car on trip.car_id = car.car_id
+--     group by trip.client_id
+--     order by 1
+-- ) t on client.client_id = t.clientId
+-- where countCar = (select count(*) from car);
 
 --42
-select *
-from taxi_company
-where taxi_company_id NOT IN (select distinct car.taxi_company_id as id from car)
+-- select *
+-- from taxi_company
+-- where taxi_company_id NOT IN (select distinct car.taxi_company_id as id from car);
 
 --43
+-- select distinct tc.taxi_company_name
+-- from taxi_company as tc left join car on car.taxi_company_id = tc.taxi_company_id
+--     left join public.model m on car.model_id = m.model_id left join public.mark m2 on m.mark_id = m2.mark_id
+-- where m2.mark_name <> 'Kia' and m2.mark_name <> 'Renault';
+
+--44
+-- select tc.taxi_company_name, sum(trip.trip_price::numeric)
+-- from taxi_company as tc left join car on tc.taxi_company_id = car.taxi_company_id
+--     left join trip on trip.car_id = car.car_id
+-- group by tc.taxi_company_id
+-- having sum(trip.trip_price::numeric) > 0
+-- order by 2 desc limit 1
+
+--45
+-- select client.client_name, client.client_patronymic
+-- from client join trip on trip.client_id = client.client_id join
+-- (select car_id
+-- from car,
+--      (select count(*), extract(year from car_yearofproduction) as year
+--       from car
+--       group by year
+--       order by 1, 2 desc
+--       limit 1) countCar
+-- where extract(year from car.car_yearofproduction) = year) t on trip.car_id = t.car_id;
+
+--46
+select car.car_id, "car-drivers".drivers_id
+from car join "car-drivers" on car.car_id = "car-drivers".car_id
