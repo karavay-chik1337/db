@@ -83,5 +83,42 @@
 -- where extract(year from car.car_yearofproduction) = year) t on trip.car_id = t.car_id;
 
 --46
-select car.car_id, "car-drivers".drivers_id
-from car join "car-drivers" on car.car_id = "car-drivers".car_id
+-- SELECT d.drivers_id, m.mark_name
+-- FROM drivers d
+--          CROSS JOIN mark m
+-- WHERE NOT EXISTS (
+--     SELECT 1
+--     FROM "car-drivers" cd
+--              INNER JOIN car c ON cd.car_id = c.car_id
+--              INNER JOIN model mo ON c.model_id = mo.model_id
+--              INNER JOIN mark ma ON mo.mark_id = ma.mark_id
+--     WHERE cd.drivers_id = d.drivers_id AND ma.mark_id = m.mark_id
+-- )
+-- order by 1;
+
+--47
+
+
+--48
+-- SELECT
+--     CASE
+--         WHEN EXISTS (SELECT * FROM taxi_company WHERE taxi_company_id NOT IN (SELECT DISTINCT taxi_company_id FROM dispatcher)) THEN 'Есть таксопарки без диспетчера'
+--         ELSE 'Все таксопарки с диспетчерами'
+--         END AS message;
+
+--49
+-- SELECT mark.mark_name AS Самая_популярная_марка, COUNT(*) AS Количество
+-- FROM car
+--          JOIN model ON car.model_id = model.model_id
+--          JOIN mark ON model.mark_id = mark.mark_id
+-- GROUP BY mark.mark_name
+-- ORDER BY 2 DESC
+-- LIMIT 1;
+
+--50
+
+
+--51
+
+
+--52

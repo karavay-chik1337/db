@@ -100,6 +100,20 @@ create table car (
 );
 
 /*==============================================================*/
+/* Table: dispatcher                                            */
+/*==============================================================*/
+create table dispatcher(
+    dispatcher_id         INT4 not null,
+    taxi_company_id       INT4 not null,
+    dispatcher_name       TEXT not null,
+    dispatcher_surname    TEXT not null,
+    dispatcher_patronymic TEXT,
+    dispatcher_phone      INT8 not null,
+    dispatcher_birthday   DATE not null,
+    constraint PK_DISPATCHER primary key (dispatcher_id)
+);
+
+/*==============================================================*/
 /* Index: car_PK                                                */
 /*==============================================================*/
 create unique index car_PK on car (
@@ -436,6 +450,11 @@ create  index "trip_car-drivers_FK" on trip (
 car_id,
 drivers_id
 );
+
+alter table dispatcher
+    add constraint "FK_DISPATCHER-TAXI_COM" foreign key (taxi_company_id)
+        references taxi_company (taxi_company_id)
+        on delete restrict on update restrict;
 
 alter table car
    add constraint "FK_CAR_CAR-COMPA_TAXI_COM" foreign key (taxi_company_id)
