@@ -1,3 +1,13 @@
+--34
+SELECT DISTINCT CONCAT(d.drivers_surname, ' ', LEFT(d.drivers_name, 1), '.', COALESCE(LEFT(d.drivers_patronymic, 1), '')) AS driver_full_name
+FROM drivers d
+         JOIN car c ON d.drivers_id = ANY(SELECT cd.drivers_id FROM "car-drivers" cd
+             JOIN car ca ON cd.car_id = ca.car_id
+             JOIN model m ON ca.model_id = m.model_id
+             WHERE m.mark_id = (SELECT mark_id FROM model WHERE model_id = c.model_id GROUP BY mark_id HAVING COUNT(DISTINCT model_id) = 1))
+WHERE NOT d.drivers_surname ILIKE '%-'
+ORDER BY driver_full_name;
+
 --35
 -- select mark.mark_name, model.model_name
 -- from mark, model
