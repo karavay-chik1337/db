@@ -28,57 +28,36 @@ create table dispatcher
 );
 
 /*==============================================================*/
-/* Index: car_PK                                                */
-/*==============================================================*/
--- create unique index car_PK on car (
--- car_id
--- );
-
-/*==============================================================*/
-/* Index: "car-company_FK"                                      */
-/*==============================================================*/
--- create  index "car-company_FK" on car (
--- taxi_company_id
--- );
-
-/*==============================================================*/
-/* Index: "car-model_FK"                                        */
-/*==============================================================*/
--- create  index "car-model_FK" on car (
--- model_id
--- );
-
-/*==============================================================*/
 /* Table: "car-drivers"                                         */
 /*==============================================================*/
 create table "car-drivers"
 (
-    car_id     INT4 not null unique,
-    drivers_id INT4 not null unique,
+    car_id     INT4 not null,
+    drivers_id INT4 not null,
     constraint "PK_CAR-DRIVERS" primary key (car_id, drivers_id)
 );
 
 /*==============================================================*/
 /* Index: "car-drivers_PK"                                      */
 /*==============================================================*/
--- create unique index "car-drivers_PK" on "car-drivers" (
--- car_id,
--- drivers_id
--- );
+create unique index "car-drivers_PK" on "car-drivers" (
+car_id,
+drivers_id
+);
 
 /*==============================================================*/
 /* Index: "car-drivers2_FK"                                     */
 /*==============================================================*/
--- create  index "car-drivers2_FK" on "car-drivers" (
--- drivers_id
--- );
+create  index "car-drivers2_FK" on "car-drivers" (
+drivers_id
+);
 
 /*==============================================================*/
 /* Index: "car-drivers_FK"                                      */
 /*==============================================================*/
--- create  index "car-drivers_FK" on "car-drivers" (
--- car_id
--- );
+create  index "car-drivers_FK" on "car-drivers" (
+car_id
+);
 
 /*==============================================================*/
 /* Table: city                                                  */
@@ -91,13 +70,6 @@ create table city
 );
 
 /*==============================================================*/
-/* Index: city_PK                                               */
-/*==============================================================*/
--- create unique index city_PK on city (
--- city_id
--- );
-
-/*==============================================================*/
 /* Table: client                                                */
 /*==============================================================*/
 create table client
@@ -108,13 +80,6 @@ create table client
     client_patronymic TEXT null,
     constraint PK_CLIENT primary key (client_id)
 );
-
-/*==============================================================*/
-/* Index: client_PK                                             */
-/*==============================================================*/
--- create unique index client_PK on client (
--- client_id
--- );
 
 /*==============================================================*/
 /* Table: drivers                                               */
@@ -133,35 +98,14 @@ create table drivers
 );
 
 /*==============================================================*/
-/* Index: drivers_PK                                            */
-/*==============================================================*/
--- create unique index drivers_PK on drivers (
--- drivers_id
--- );
-
-/*==============================================================*/
-/* Index: "drivers-company_FK"                                  */
-/*==============================================================*/
--- create  index "drivers-company_FK" on drivers (
--- taxi_company_id
--- );
-
-/*==============================================================*/
-/* Index: "drivers-address_FK"                                  */
-/*==============================================================*/
--- create  index "drivers-address_FK" on drivers (
--- house_id
--- );
-
-/*==============================================================*/
 /* Table: drivers_license                                       */
 /*==============================================================*/
 create table drivers_license
 (
     drivers_license_id             INT4 not null unique,
     drivers_id                     INT4 not null,
-    drivers_license_series         INT4 not null,
-    drivers_license_number         INT4 not null,
+    drivers_license_series         INT4 not null unique ,
+    drivers_license_number         INT4 not null unique ,
     drivers_license_validityPeriod DATE not null check (drivers_license_validityPeriod > '2000-01-01'),
     drivers_license_categoriesA    BOOL not null,
     drivers_license_categoriesB    BOOL not null,
@@ -169,20 +113,6 @@ create table drivers_license
     drivers_license_categoriesD    BOOL not null,
     constraint PK_DRIVERS_LICENSE primary key (drivers_license_id)
 );
-
-/*==============================================================*/
-/* Index: drivers_license_PK                                    */
-/*==============================================================*/
--- create unique index drivers_license_PK on drivers_license (
---                        drivers_license_id
---     );
-
-/*==============================================================*/
-/* Index: "drivers-license_FK"                                  */
-/*==============================================================*/
--- create index "drivers-license_FK" on drivers_license (
---                                                       drivers_id
---     );
 
 /*==============================================================*/
 /* Table: house                                                 */
@@ -197,35 +127,14 @@ create table house
 );
 
 /*==============================================================*/
-/* Index: house_PK                                              */
-/*==============================================================*/
--- create unique index house_PK on house (
---                                        house_id
---     );
-
-/*==============================================================*/
-/* Index: street_house_FK                                       */
-/*==============================================================*/
--- create index street_house_FK on house (
---                                        street_id
---     );
-
-/*==============================================================*/
 /* Table: mark                                                  */
 /*==============================================================*/
 create table mark
 (
     mark_id   INT4 not null unique ,
-    mark_name TEXT not null,
+    mark_name TEXT not null unique ,
     constraint PK_MARK primary key (mark_id)
 );
-
-/*==============================================================*/
-/* Index: mark_PK                                               */
-/*==============================================================*/
--- create unique index mark_PK on mark (
---                                      mark_id
---     );
 
 /*==============================================================*/
 /* Table: model                                                 */
@@ -239,20 +148,6 @@ create table model
 );
 
 /*==============================================================*/
-/* Index: model_PK                                              */
-/*==============================================================*/
--- create unique index model_PK on model (
---                                        model_id
---     );
-
-/*==============================================================*/
-/* Index: "model-mark_FK"                                       */
-/*==============================================================*/
--- create index "model-mark_FK" on model (
---                                        mark_id
---     );
-
-/*==============================================================*/
 /* Table: street                                                */
 /*==============================================================*/
 create table street
@@ -262,20 +157,6 @@ create table street
     street_name TEXT not null,
     constraint PK_STREET primary key (street_id)
 );
-
-/*==============================================================*/
-/* Index: street_PK                                             */
-/*==============================================================*/
--- create unique index street_PK on street (
---                                          street_id
---     );
-
-/*==============================================================*/
-/* Index: "city-street_FK"                                      */
-/*==============================================================*/
--- create index "city-street_FK" on street (
---                                          city_id
---     );
 
 /*==============================================================*/
 /* Table: taxi_company                                          */
@@ -289,27 +170,6 @@ create table taxi_company
     taxi_company_phone    INT8 not null unique ,
     constraint PK_TAXI_COMPANY primary key (taxi_company_id)
 );
-
-/*==============================================================*/
-/* Index: taxi_company_PK                                       */
-/*==============================================================*/
--- create unique index taxi_company_PK on taxi_company (
---                                                      taxi_company_id
---     );
-
-/*==============================================================*/
-/* Index: "company-owner_FK"                                    */
-/*==============================================================*/
--- create index "company-owner_FK" on taxi_company (
---                                                  taxi_company_owner_id
---     );
-
-/*==============================================================*/
-/* Index: company_address_FK                                    */
-/*==============================================================*/
--- create index company_address_FK on taxi_company (
---                                                  house_id
---     );
 
 /*==============================================================*/
 /* Table: taxi_company_owner                                    */
@@ -326,13 +186,6 @@ create table taxi_company_owner
 );
 
 /*==============================================================*/
-/* Index: taxi_company_owner_PK                                 */
-/*==============================================================*/
--- create unique index taxi_company_owner_PK on taxi_company_owner (
---                                                                  taxi_company_owner_id
---     );
-
-/*==============================================================*/
 /* Table: trip                                                  */
 /*==============================================================*/
 create table trip
@@ -347,35 +200,6 @@ create table trip
     trip_price     MONEY     null,
     constraint PK_TRIP primary key (trip_id)
 );
-
-/*==============================================================*/
-/* Index: trip_PK                                               */
-/*==============================================================*/
--- create unique index trip_PK on trip (
---                                      trip_id
---     );
-
-/*==============================================================*/
-/* Index: "trip-client_FK"                                      */
-/*==============================================================*/
--- create index "trip-client_FK" on trip (
---                                        client_id
---     );
-
-/*==============================================================*/
-/* Index: trip_address_FK                                       */
-/*==============================================================*/
--- create index trip_address_FK on trip (
---                                       house_id
---     );
-
-/*==============================================================*/
-/* Index: "trip_car-drivers_FK"                                 */
-/*==============================================================*/
--- create index "trip_car-drivers_FK" on trip (
---                                             car_id,
---                                             drivers_id
---     );
 
 alter table dispatcher
     add constraint "FK_DISPATCHER-TAXI_COM" foreign key (taxi_company_id)
