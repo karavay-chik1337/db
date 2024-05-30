@@ -48,7 +48,8 @@ values (1, 89006001020, 'Ivan', null),
        (3, 89006003040, 'Alex', null);
 
 insert into car(car_id, taxi_company_id, model_id, car_yearofproduction, car_number, car_insurance)
-values (1, 1, 3, '01/07/2007', 'o700ct36', '111111111'),
+values
+    (1, 1, 3, '01/07/2007', 'o700ct36', '111111111'),
        (2, 1, 3, '01/04/2008', 'o700cq36', '111111112'),
        (3, 1, 3, '01/05/2009', 'o700ca36', '111111113'),
        (4, 1, 5, '01/08/2008', 'o700cs36', '111111114'),
