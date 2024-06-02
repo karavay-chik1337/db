@@ -66,12 +66,15 @@ values
 
 insert into drivers(drivers_id, taxi_company_id, house_id, drivers_name, drivers_surname, drivers_patronymic,
                     drivers_birthday, drivers_phone)
-values (1, 1, 1, 'Alex', 'Ivanov', null, '1/1/1980', 89005004030),
-       (2, 1, 2, 'Ivan', 'Perov', null, '1/1/1981', 89005004040),
-       (3, 1, 3, 'Maks', 'Negrov', null, '1/1/1982', 89005004050),
-       (4, 3, 4, 'Eric', 'Saharov', null, '2/1/1980', 89006004030),
-       (5, 3, 5, 'Mark', 'Kozlov', null, '3/1/1980', 89007004030),
-       (6, 3, 6, 'David', 'Fedotov', null, '4/1/1980', 89008004030);
+values (7, 3, 2, 'Alex', 'Fedotov', null, '4/1/2000', 89008004031),
+       (8, 1, 1, 'Maks', 'Fedotov', null, '14/1/1989', 89008004031),
+       (9, 1, 4, 'Ivan', 'Ivanov', null, '12/1/1999', 89008004033);
+--     (1, 1, 1, 'Alex', 'Ivanov', null, '1/1/1980', 89005004030),
+--        (2, 1, 2, 'Ivan', 'Perov', null, '1/1/1981', 89005004040),
+--        (3, 1, 3, 'Maks', 'Negrov', null, '1/1/1982', 89005004050),
+--        (4, 3, 4, 'Eric', 'Saharov', null, '2/1/1980', 89006004030),
+--        (5, 3, 5, 'Mark', 'Kozlov', null, '3/1/1980', 89007004030),
+--        (6, 3, 6, 'David', 'Fedotov', null, '4/1/1980', 89008004030);
 
 
 insert into "car-drivers"(car_id, drivers_id)
